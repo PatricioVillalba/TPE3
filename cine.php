@@ -45,7 +45,8 @@ class funcionCine extends funcion{
     }
 
     public function incrementar(){
-        $valor= $this->getPrecio()+ $this->getPrecio()*0.65;
+        // $valor= $this->getPrecio()+ $this->getPrecio()*0.65;
+        $valor='cine';
        return $valor;
     }
 }
