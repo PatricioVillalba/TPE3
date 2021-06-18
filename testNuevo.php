@@ -9,46 +9,15 @@ include 'transacciones/abmTeatro.php';
 include 'transacciones/abmFuncionTeatro.php';
 include 'transacciones/abmFuncionCine.php';
 include 'transacciones/abmFuncionMusical.php';
-// $datos=array('idfuncion' => null,'idteatro'=>2,'nombre'=>'carlitos s','hora'=>22,'duracion'=>44,'precio'=>55,'director'=>'mauri','cantpersonas'=>900);
 
 
 $abmFuncionTeatro =  new abmFuncionTeatro();
 $abmFuncionCine =  new abmFuncionCine();
 $abmFuncionMusical =  new abmFuncionMusical();
-// $datos=array('idfuncion' => null,'idteatro'=>2,'nombre'=>'tini','hora'=>00,'duracion'=>1,'precio'=>20);
-
 $abmTeatro= new abmTeatro();
 $teatro= new teatro();
-
-// $abmTeatro->borrarTeatro($teatro);
-// $abmFuncionTeatro->insertarFuncion($datos);
-// $abmTeatro =  new abmTeatro();
-// $teatro=$abmTeatro->seleccionTeatro(2);
-// $abmTeatro->verFunciones($teatro);
-// $obj_funcion= new funcion();
-// $obj_funcion->buscar(56);
-// print_r($obj_funcion);
-// echo($obj_funcion->getObjTeatro()->getIdteatro());
-// exit;
-// $obj_funcionMusical= new funcionCine();
-// $colPersonas=$obj_funcionMusical->listar();
-// foreach ($colPersonas as $unaPersona){
-    $teatro=$abmTeatro->seleccionTeatro(5);
-    // $abmTeatro->borrarTeatro($teatro);	
-// 	echo $unaPersona;
-// 	echo "------------------------------------------------------- \n";
-// }
-// $obj_teatro=new teatro();
-// $obj_teatro->buscar(2);
-// $obj_teatro->getColObjFunciones();
-// print_r($obj_teatro);
-
-// $obj_funcionMusical->cargar($datos);
-// $obj_funcionMusical->insertar();
-// var_dump($obj_funcion);
-// $obj_funcion->Buscar(31);
-// print_r($obj_funcionMusical);
-// exit;
+$teatro=$abmTeatro->seleccionTeatro(5);
+ 
 do {
     echo "--------------------------------------" . "\n";
     echo "ELIJA UNA OPCION: " . "\n";
