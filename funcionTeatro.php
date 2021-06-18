@@ -18,7 +18,7 @@ class funcionTeatro extends funcion{
     }
 
     public function cargar($datosTeatro){
-		$datos=array('idfuncion' => $datosTeatro['idfuncion'],'idteatro'=>$datosTeatro['idteatro'],'nombre'=>$datosTeatro['nombre'],'hora'=>$datosTeatro['hora'],'duracion'=>$datosTeatro['duracion'],'precio'=>$datosTeatro['precio']);
+		$datos=array('idfuncion' => $datosTeatro['idfuncion'],'objTeatro'=>$datosTeatro['objTeatro'],'nombre'=>$datosTeatro['nombre'],'hora'=>$datosTeatro['hora'],'duracion'=>$datosTeatro['duracion'],'precio'=>$datosTeatro['precio']);
 		parent::cargar($datos); 
     }
 
@@ -48,7 +48,7 @@ class funcionTeatro extends funcion{
     public static function listar($condicion=""){
 	    $arreglo = null;
 		$base=new BaseDatos();
-		$consulta="Select * from funcion  ";
+		$consulta="Select * from funcion natural join obra ";
 		if ($condicion!=""){
 		    $consulta=$consulta.' where '.$condicion;
 		}
@@ -60,9 +60,9 @@ class funcionTeatro extends funcion{
 				while($row2=$base->Registro()){
 					$obj=new funcionTeatro();
 					$obj->Buscar($row2['idfuncion']);
-					if($obj->getIdfuncion()!=0){
+					// if($obj->getIdfuncion()!=0){
 						array_push($arreglo,$obj);}	
-				}
+				// }
 		 	}}
             return $arreglo;
 	}	

@@ -55,7 +55,7 @@ class funcionMusical extends funcion{
     }
   
 	public function cargar($datosTeatro){
-		$datos=array('idfuncion' => $datosTeatro['idfuncion'],'idteatro'=>$datosTeatro['idteatro'],'nombre'=>$datosTeatro['nombre'],'hora'=>$datosTeatro['hora'],'duracion'=>$datosTeatro['duracion'],'precio'=>$datosTeatro['precio']);
+		$datos=array('idfuncion' => $datosTeatro['idfuncion'],'objTeatro'=>$datosTeatro['objTeatro'],'nombre'=>$datosTeatro['nombre'],'hora'=>$datosTeatro['hora'],'duracion'=>$datosTeatro['duracion'],'precio'=>$datosTeatro['precio']);
 		parent::cargar($datos);       
 		$this->setdirector($datosTeatro['director']);
         $this->setcantidadpers($datosTeatro['cantpersonas']);
@@ -89,7 +89,7 @@ class funcionMusical extends funcion{
 	public static function listar($condicion=""){
 	    $arreglo = null;
 		$base=new BaseDatos();
-		$consulta="Select * from funcion ";
+		$consulta="Select * from funcion natural join musical"; //ha
 		if ($condicion!=""){
 		    $consulta=$consulta.' where '.$condicion;
 		}
@@ -101,9 +101,9 @@ class funcionMusical extends funcion{
 				while($row2=$base->Registro()){
 					$obj=new funcionMusical();
 					$obj->Buscar($row2['idfuncion']);
-					if($obj->getIdfuncion()!=0){
-						array_push($arreglo,$obj);}				
-					}
+					// if($obj->getIdfuncion()!=0){
+					array_push($arreglo,$obj);}				
+					// }
 		 	}
 		 }
 		 return $arreglo;

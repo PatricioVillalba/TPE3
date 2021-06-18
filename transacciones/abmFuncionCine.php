@@ -2,13 +2,14 @@
 
 class abmFuncionCine{
 
-    function insertarFuncion($datos){ 
-        // $dat=array('idfuncion' =>$datos['idfuncion'],'idteatro'=>$datos['idteatro'],'nombre'=>$datos['nombre'],
-        // 'hora'=>$datos['horario'],'duracion'=>$datos['duracion'],'precio'=>$datos['precio'],'genero'=>$datos['genero'],'origen'=>$datos['origen']);
+    function insertarFuncion($datos){
         $objfuncionCine=new funcionCine();
         $objfuncionCine->cargar($datos);
-        print_r($objfuncionCine);
-        $objfuncionCine->insertar();
+        $objTeatro= $datos['objTeatro'];
+        $HorarioSolapado=$objTeatro->horario($datos['hora'],$datos['duracion']);
+        if($HorarioSolapado){
+        $objfuncionCine->insertar();}
+        return $HorarioSolapado;
     }
 
     function eliminarFuncion($id){ 
@@ -25,8 +26,18 @@ class abmFuncionCine{
         $objfuncionCine=new funcionCine();
         $objfuncionCine->buscar($id);
         $objfuncionCine->cargar($datos);
-        $objfuncionCine->setIdfuncion($id);
         $objfuncionCine->modificar();
+    }
+
+    function verFunciones(){ 
+        $sale='';
+        $objfuncionCine=new funcionCine();        
+        $arreFunciones= $objfuncionCine->listar();   
+        foreach ($arreFunciones as $unaFuncion){	
+            	$sale=$sale.$unaFuncion."------------------------------------------------------- \n";
+            }
+        // echo $sale;        
+        return $sale;        
     }
 
 }

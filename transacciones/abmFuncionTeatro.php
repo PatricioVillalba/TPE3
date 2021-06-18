@@ -3,10 +3,14 @@
 class abmFuncionTeatro{
 
     function insertarFuncion($datos){ 
-        $funcionteatro=new funcionTeatro();
-        // $dat=array('idfuncion' => null,'idteatro'=>2,'nombre'=>'carlitos s','hora'=>22,'duracion'=>44,'precio'=>55,'director'=>'mauri','cantpersonas'=>900);        
+        $funcionteatro=new funcionTeatro();       
         $funcionteatro->cargar($datos);
-        $funcionteatro->insertar();
+        $objTeatro= $datos['objTeatro'];
+        $HorarioSolapado=$objTeatro->horario($datos['hora'],$datos['duracion']);
+        if($HorarioSolapado){
+        $funcionteatro->insertar();}
+        return $HorarioSolapado;
+        
     }
 
     function eliminarFuncion($id){ 
@@ -23,8 +27,17 @@ class abmFuncionTeatro{
         $objfuncionTeatro=new funcionTeatro();
         $objfuncionTeatro->buscar($id);
         $objfuncionTeatro->cargar($datos);
-        $objfuncionTeatro->setIdfuncion($id);
         $objfuncionTeatro->modificar();
+    }
+
+    function verFunciones(){ 
+        $sale='';
+        $objfuncionTeatro=new funcionTeatro();        
+        $arreFunciones= $objfuncionTeatro->listar();   
+        foreach ($arreFunciones as $unaFuncion){	
+                $sale=$sale.$unaFuncion."------------------------------------------------------- \n";
+            };        
+        return $sale;        
     }
 
 }

@@ -39,7 +39,7 @@ class teatro
 	}
     public function getColObjFunciones()
     {
-        if(empty($this->colObjFunciones)){
+        // if(empty($this->colObjFunciones)){
             $objCine = new funcionCine();
             $objMusical = new funcionMusical();
             $objObraTeatro = new funcionTeatro();
@@ -50,7 +50,7 @@ class teatro
             $colObrasTeatro = $objObraTeatro->listar($condicion);           
             $coleccionFunciones = array_merge($colCine, $colMusical, $colObrasTeatro);
             $this->setColObjFunciones($coleccionFunciones);
-        }
+        // }
         return $this->colObjFunciones;
     }
 
@@ -218,40 +218,53 @@ class teatro
 		return $resp; 
 	}
 
+    public function horario($horaYminutosEntrada, $minutosDuracion)
+    {
 
+        $horarioNuevo = intval(substr($horaYminutosEntrada, 0, 2)) * 60 + intval(substr($horaYminutosEntrada, 2, 4));
+        $horaFinnueva = $horarioNuevo + $minutosDuracion;
 
-    // public function horario($horarioNuevo, $minutoAnadirnuevo)
-    // {
-    //     $sale=true;
-    //     foreach ($this->getFunciones() as $funcion) {
-    //         $horaInicialArre = $funcion->getHorario();
-    //         $minutoAnadir = $funcion->getDuracion();
+        $sale = true;
+        $i = 0;
+        $colObjFunciones = $this->getColObjFunciones();
+        if ($horaFinnueva > 1440) {
+            $sale = false; //no puede terminar despues de las 24:00
+        } else {
+            while (
+                $sale && $i < count($colObjFunciones)
+            ) {
+                // echo $this->colObjFunciones[$i]->getHorario() . "\n";
+                // echo strlen((string)$this->colObjFunciones[$i]->getHorario()) . "\n";
+                $horaI = $colObjFunciones[$i]->getHorario();
+                $minAnadir = $colObjFunciones[$i]->getDuracion();
 
-    //         $segundos_horaInicial = strtotime($horaInicialArre);
-    //         $segundos_minutoAnadir = $minutoAnadir * 60;
-    //         $horaInicialArre = date("H:i", $segundos_horaInicial);
-    //         $horaFinArre = date("H:i", $segundos_horaInicial + $segundos_minutoAnadir);
-           
-    //         $segundos_horarioNuevo = strtotime($horarioNuevo);
-    //         $segundos_minutoAnadir = $minutoAnadirnuevo * 60;
+                $horaInicialArre = intval(substr($horaI, 0, 2)) * 60 + intval(substr($horaI, 2, 4));
+                $horaFinArre = $horaInicialArre +  $minAnadir;
 
-    //         $horarioNuevo = date("H:i", $segundos_horarioNuevo);
-    //         $horaFinnueva = date("H:i", $segundos_horarioNuevo + $segundos_minutoAnadir);           
-
-    //         if ($horarioNuevo < $horaInicialArre || $horarioNuevo > $horaFinArre) {
-    //             if (
-    //                 $horaFinnueva < $horaInicialArre || $horaFinnueva > $horaFinArre
-    //             ) {
-                   
-    //             } else {
-    //                 $sale=false;
-    //             }
-    //         } else {
-    //             $sale=false;
-    //         }
-    //     }
-    //     return $sale;
-    // }
+                // echo ($horarioNuevo . '<' . $horaInicialArre . "\n");
+                if ($horarioNuevo < $horaInicialArre) {
+                    // echo 'entro en el menor' . "\n";
+                    // echo ($horaFinnueva . '<' . $horaInicialArre);
+                    if (
+                        $horaFinnueva <  $horaInicialArre
+                    ) {
+                        // echo ('empieza y termina antes' . "\n");
+                    } else {
+                        $sale = false;
+                    }
+                } else {
+                    // echo  $horarioNuevo . '>' . $horaFinArre . "\n";
+                    if ($horarioNuevo > $horaFinArre) {
+                        // echo ('empieza despues' . "\n");
+                    } else {
+                        $sale = false;
+                    }
+                }
+                $i++;
+            }
+        }
+        return $sale;
+    }
 
   
     // public function modificarNombreFuncion($i, $nom)
@@ -272,11 +285,11 @@ class teatro
     {
         $salida = '';
         
-        $salida='Teatro: '.$this->getNombreTeatro().' Direccion: '.$this->getDireccion()." \n";
+        $salida='ID Teatro: '.$this->getIdteatro().' Teatro: '.$this->getNombreTeatro().' Direccion: '.$this->getDireccion()." \n FUNCIONES: [\n ";
          foreach ($this->getColObjFunciones() as $funcion) {
              $salida=$salida.$funcion->__toString()." \n";
          }
-        
+         $salida=$salida."] \n";
         return $salida;
     }
 

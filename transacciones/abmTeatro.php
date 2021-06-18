@@ -63,9 +63,10 @@ class abmTeatro{
         $sale='';
         $objTeatro=new teatro();
         $objTeatro->Buscar($idTeatro);  
-        $arreFunciones= $objTeatro->getColObjFunciones();
+        $arreFunciones= $objTeatro->getColObjFunciones(); 
         foreach ($arreFunciones as $unaFuncion){	
-            	$sale=$sale.$unaFuncion."------------------------------------------------------- \n";}
+            	$sale=$sale.$unaFuncion."------------------------------------------------------- \n";
+            }
         // echo $sale;        
         return $sale;        
     }
@@ -79,6 +80,16 @@ class abmTeatro{
                 
             }
         // echo $sale;        
+        return $sale;        
+    }
+
+    function verTeatros(){ 
+        $sale='';
+        $objTeatro=new teatro();        
+        $arreFunciones= $objTeatro->listar();   
+        foreach ($arreFunciones as $unaFuncion){	
+                $sale=$sale.$unaFuncion."------------------------------------------------------- \n";
+            };        
         return $sale;        
     }
 }
